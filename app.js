@@ -16,6 +16,9 @@ const authRouter = require("./routes/auth.routes");
 const usageRoutes = require("./routes/usage.routes");
 const billingRoutes = require("./routes/billing.routes");
 const analyticsRoutes = require("./routes/analytics.routes");
+const paymentRoutes = require("./routes/payment.routes");
+
+const chargeRouter = require("./ref/charge");
 
 const app = express();
 dotenv.config();
@@ -41,6 +44,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/usage", usageRoutes);
 app.use("/api/billing", billingRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/payment", paymentRoutes);
+
+app.use("/api/charge", chargeRouter);
 
 // 404 not found handler
 app.use(notFoundHandler);

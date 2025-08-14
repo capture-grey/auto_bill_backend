@@ -1,6 +1,71 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const paymentMethodSchema = new mongoose.Schema(
+  {
+    methodType: {
+      type: String,
+      enum: ["card", "bank"],
+      required: true,
+    },
+    // Authorize.net payment token
+    token: {
+      type: String,
+      required: true,
+    },
+    // Card fields
+    last4: {
+      type: String,
+      required: function () {
+        return this.methodType === "card";
+      },
+    },
+    brand: {
+      type: String,
+      required: function () {
+        return this.methodType === "card";
+      },
+    },
+    expiry: {
+      type: String,
+      required: function () {
+        return this.methodType === "card";
+      },
+    },
+    // Bank fields
+    accountType: {
+      type: String,
+      enum: ["checking", "savings"],
+      required: function () {
+        return this.methodType === "bank";
+      },
+    },
+    routingNumber: {
+      type: String,
+      required: function () {
+        return this.methodType === "bank";
+      },
+    },
+    accountHolderName: {
+      type: String,
+      required: function () {
+        return this.methodType === "bank";
+      },
+    },
+    bankName: String,
+    // Common fields
+    isDefault: {
+      type: Boolean,
+      default: false,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { _id: false }
+);
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -34,25 +99,9 @@ const userSchema = new mongoose.Schema(
     timezone: {
       type: String,
       required: true,
-      default: "UTC", // default timezone
+      default: "UTC",
     },
-    paymentMethods: [
-      {
-        methodType: {
-          type: String,
-          enum: ["card", "bank"],
-          required: true,
-        },
-        token: {
-          type: String,
-          required: true, // tokenized ID from Authorize.net
-        },
-        isDefault: {
-          type: Boolean,
-          default: false,
-        },
-      },
-    ],
+    paymentMethods: [paymentMethodSchema],
   },
   {
     timestamps: true,
@@ -76,7 +125,6 @@ const userSchema = new mongoose.Schema(
 // Password hashing
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-
   try {
     const saltRounds = 12;
     this.password = await bcrypt.hash(this.password, saltRounds);
@@ -91,8 +139,35 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-// Index for email
-//userSchema.index({ email: 1 }, { unique: true });
+// Get default payment method
+userSchema.methods.getDefaultPaymentMethod = function () {
+  return this.paymentMethods.find((method) => method.isDefault);
+};
 
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+// Add payment method
+userSchema.methods.addPaymentMethod = async function (methodData) {
+  if (methodData.isDefault) {
+    this.paymentMethods.forEach((method) => {
+      method.isDefault = false;
+    });
+  }
+  this.paymentMethods.push(methodData);
+  return this.save();
+};
+
+// Set default payment method
+userSchema.methods.setDefaultPaymentMethod = async function (methodId) {
+  let found = false;
+  this.paymentMethods.forEach((method) => {
+    if (method._id.toString() === methodId) {
+      method.isDefault = true;
+      found = true;
+    } else {
+      method.isDefault = false;
+    }
+  });
+  if (!found) throw new Error("Payment method not found");
+  return this.save();
+};
+
+module.exports = mongoose.model("User", userSchema);
