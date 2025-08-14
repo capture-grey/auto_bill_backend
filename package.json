@@ -1,7 +1,7 @@
 {
-  "name": "bookies-nb",
+  "name": "octo_bill",
   "version": "1.0.0",
-  "description": "",
+  "description": "Usage-based SaaS billing platform backend",
   "homepage": "https://github.com/capture-grey/backend-nb#readme",
   "bugs": {
     "url": "https://github.com/capture-grey/backend-nb/issues"
@@ -19,6 +19,7 @@
     "start": "NODE_ENV=development nodemon app.js"
   },
   "dependencies": {
+    "authorizenet": "^1.0.10",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.1",
@@ -28,6 +29,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.1",
     "nodemon": "^3.1.10",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "luxon": "^3.6.1",
+    "node-cron": "^3.0.2",
+    "morgan": "^1.10.0"
   }
 }

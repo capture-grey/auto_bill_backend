@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Please fill a valid email address",
+        "Please provide a valid email",
       ],
     },
     password: {
@@ -26,23 +26,30 @@ const userSchema = new mongoose.Schema(
       select: false,
       minlength: [8, "Password must be at least 8 characters long"],
     },
-    ownedBooks: [
+    role: {
+      type: String,
+      enum: ["admin", "user"],
+      default: "user",
+    },
+    timezone: {
+      type: String,
+      required: true,
+      default: "UTC", // default timezone
+    },
+    paymentMethods: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Book",
-      },
-    ],
-    joinedForums: [
-      {
-        forumId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Forum",
+        methodType: {
+          type: String,
+          enum: ["card", "bank"],
           required: true,
         },
-        role: {
+        token: {
           type: String,
-          enum: ["admin", "member"],
-          default: "member",
+          required: true, // tokenized ID from Authorize.net
+        },
+        isDefault: {
+          type: Boolean,
+          default: false,
         },
       },
     ],
@@ -66,32 +73,26 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Password comparison method
-userSchema.methods.comparePassword = async function (candidatePassword) {
-  try {
-    return await bcrypt.compare(candidatePassword, this.password);
-  } catch (error) {
-    throw new Error("Password comparison failed");
-  }
-};
-
-// Pre-save hook for password hashing
+// Password hashing
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
   try {
-    const saltRounds = 12; // Increased from 10 to 12 for better security
+    const saltRounds = 12;
     this.password = await bcrypt.hash(this.password, saltRounds);
     next();
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 });
 
-// Indexes for better query performance
-userSchema.index({ email: 1 }, { unique: true });
-userSchema.index({ "joinedForums.forumId": 1 });
+// Compare password method
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Index for email
+//userSchema.index({ email: 1 }, { unique: true });
 
 const User = mongoose.model("User", userSchema);
-
 module.exports = User;

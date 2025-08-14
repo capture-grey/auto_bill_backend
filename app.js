@@ -9,21 +9,19 @@ const cookieParser = require("cookie-parser");
 const {
   notFoundHandler,
   errorHandler,
-} = require("./middlewares/common/errorHandler");
+} = require("./middlewares/error.middleware");
+const connectDB = require("./config/db.js");
 
-const authRouter = require("./router/authRouter");
-const userRouter = require("./router/userRouter");
-const bookRouter = require("./router/bookRouter");
-const forumRouter = require("./router/forumRouter");
+const authRouter = require("./routes/auth.routes");
+const usageRoutes = require("./routes/usage.routes");
+const billingRoutes = require("./routes/billing.routes");
+const analyticsRoutes = require("./routes/analytics.routes");
 
 const app = express();
 dotenv.config();
 
 // database connection
-mongoose
-  .connect(process.env.MONGO_CONNECTION_STRING)
-  .then(() => console.log("database connection successful!"))
-  .catch((err) => console.log(err));
+connectDB();
 
 // request parsers
 app.use(express.json());
@@ -35,15 +33,14 @@ app.use(express.static(path.join(__dirname, "public")));
 // parse cookies
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-// routing setup
-app.use("/api/auth", authRouter);
-app.use("/api/user", userRouter);
-app.use("/api/book", bookRouter);
-app.use("/api/forum", forumRouter);
-
 app.get("/", (req, res) => {
-  res.status(200).json({ message: "Hello From Bookies!" });
+  res.status(200).json({ message: "Hello From Octobill" });
 });
+
+app.use("/api/auth", authRouter);
+app.use("/api/usage", usageRoutes);
+app.use("/api/billing", billingRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 // 404 not found handler
 app.use(notFoundHandler);
