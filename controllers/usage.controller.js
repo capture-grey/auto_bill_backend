@@ -10,6 +10,8 @@ const startService = async (req, res) => {
     const { userId } = req.params;
     const { activityType } = req.body;
 
+    console.log("DEBUG: startService called with:", { userId, activityType });
+
     if (!userId || typeof activityType !== "number") {
       return res.status(400).json({
         success: false,
@@ -18,6 +20,8 @@ const startService = async (req, res) => {
     }
 
     const user = await User.findById(userId);
+    console.log("DEBUG: Retrieved user from DB:", user);
+
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -25,8 +29,15 @@ const startService = async (req, res) => {
       });
     }
 
+    console.log(
+      "DEBUG: User customerProfileId:",
+      user.customerProfileId,
+      "Payment methods:",
+      user.paymentMethods
+    );
+
     // Ensure user has an Authorize.net customer profile before starting
-    if (!user.authorizeNetProfileId) {
+    if (!user.customerProfileId) {
       return res.status(400).json({
         success: false,
         message:
@@ -56,6 +67,8 @@ const startService = async (req, res) => {
     });
 
     await usage.save();
+    console.log("DEBUG: Created new usage entry:", usage);
+
     res.status(201).json({ success: true, usage });
   } catch (err) {
     console.error("Start service error:", err);
@@ -71,6 +84,8 @@ const endService = async (req, res) => {
   try {
     const { userId } = req.params;
     const { activityType } = req.body;
+
+    console.log("DEBUG: endService called with:", { userId, activityType });
 
     if (!userId || typeof activityType !== "number") {
       return res.status(400).json({
@@ -96,12 +111,10 @@ const endService = async (req, res) => {
     usage.durationMinutes = Math.ceil(
       (usage.endTime - usage.startTime) / 60000
     );
+    usage.isPaid = false; // Mark as unpaid for billing
 
     await usage.save();
-
-    // Mark as unpaid so billing service can pick it up later
-    usage.isPaid = false;
-    await usage.save();
+    console.log("DEBUG: Updated usage entry with end time:", usage);
 
     res.status(200).json({ success: true, usage });
   } catch (err) {
