@@ -8,7 +8,7 @@ const usageSchema = new mongoose.Schema(
       required: true,
     },
     activityType: {
-      type: Number, // changed from String to Number
+      type: Number, // type of activity, e.g., 1 = video, 2 = call, etc.
       required: true,
       default: 1,
     },
@@ -33,6 +33,21 @@ const usageSchema = new mongoose.Schema(
       type: String, // Authorize.net transaction ID if paid
       default: null,
     },
+
+    // 🔹 New fields for payment profile tracking
+    methodType: {
+      type: String, // 'card' or 'bank'
+      enum: ["card", "bank"],
+      default: null,
+    },
+    customerProfileId: {
+      type: String, // Authorize.net Customer Profile ID
+      default: null,
+    },
+    paymentProfileId: {
+      type: String, // Authorize.net Payment Profile ID
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -43,13 +58,10 @@ const usageSchema = new mongoose.Schema(
 usageSchema.pre("save", function (next) {
   if (this.endTime && !this.durationMinutes) {
     const diffMs = this.endTime - this.startTime;
-    this.durationMinutes = Math.ceil(diffMs / 60000); // milliseconds → minutes
+    this.durationMinutes = Math.ceil(diffMs / 60000); // ms → minutes
   }
   next();
 });
-
-// Compound index to quickly find ongoing usage
-//usageSchema.index({ user: 1, activityType: 1, endTime: 1 });
 
 const Usage = mongoose.model("Usage", usageSchema);
 module.exports = Usage;

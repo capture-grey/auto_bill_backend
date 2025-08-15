@@ -8,49 +8,20 @@ const paymentMethodSchema = new mongoose.Schema(
       enum: ["card", "bank"],
       required: true,
     },
-    // Authorize.net payment token
-    token: {
+    // Authorize.net customerPaymentProfileId
+    paymentProfileId: {
       type: String,
       required: true,
     },
-    // Card fields
-    last4: {
-      type: String,
-      required: function () {
-        return this.methodType === "card";
-      },
-    },
-    brand: {
-      type: String,
-      required: function () {
-        return this.methodType === "card";
-      },
-    },
-    expiry: {
-      type: String,
-      required: function () {
-        return this.methodType === "card";
-      },
-    },
-    // Bank fields
+    // Card display fields
+    last4: String,
+    brand: String,
+    expiryMonth: String,
+    expiryYear: String,
+    // Bank display fields
     accountType: {
       type: String,
       enum: ["checking", "savings"],
-      required: function () {
-        return this.methodType === "bank";
-      },
-    },
-    routingNumber: {
-      type: String,
-      required: function () {
-        return this.methodType === "bank";
-      },
-    },
-    accountHolderName: {
-      type: String,
-      required: function () {
-        return this.methodType === "bank";
-      },
     },
     bankName: String,
     // Common fields
@@ -100,6 +71,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       default: "UTC",
+    },
+    // NEW: Authorize.net profile ID
+    customerProfileId: {
+      type: String,
+      default: null,
     },
     paymentMethods: [paymentMethodSchema],
   },

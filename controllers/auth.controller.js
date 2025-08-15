@@ -1,17 +1,15 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { createCustomerProfile } = require("../services/authorizeNetService"); // new helper
 
 /**
- * Register a new user
- * First user will be admin, others default to user role
+ * Register a new user with Authorize.net Customer Profile
  */
-
 const register = async (req, res) => {
   try {
     const { name, email, password, timezone } = req.body;
 
-    // Basic validation
     if (!name || !email || !password || !timezone) {
       return res.status(400).json({
         success: false,
@@ -19,7 +17,6 @@ const register = async (req, res) => {
       });
     }
 
-    // Check existing user
     const existing = await User.findOne({ email });
     if (existing) {
       return res.status(400).json({
@@ -28,11 +25,9 @@ const register = async (req, res) => {
       });
     }
 
-    // Determine role
     const isFirstUser = (await User.countDocuments()) === 0;
     const role = isFirstUser ? "admin" : "user";
 
-    // Create user without payment methods initially
     const user = new User({
       name,
       email,
@@ -43,7 +38,6 @@ const register = async (req, res) => {
 
     await user.save();
 
-    // Generate token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
@@ -57,6 +51,7 @@ const register = async (req, res) => {
         email: user.email,
         role: user.role,
         timezone: user.timezone,
+        paymentMethods: [], // empty at registration
       },
     });
   } catch (err) {
@@ -67,7 +62,6 @@ const register = async (req, res) => {
     });
   }
 };
-
 /**
  * Login user
  */
@@ -99,10 +93,12 @@ const login = async (req, res) => {
       success: true,
       token,
       user: {
+        id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
         timezone: user.timezone,
+        authorizeNetProfileId: user.authorizeNetProfileId || null,
       },
     });
   } catch (err) {
