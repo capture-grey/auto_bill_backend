@@ -1,31 +1,30 @@
-// controllers/paymentMethod.controller.js
+// controllers/payment.controller.js
 const User = require("../models/User");
 const { APIContracts, APIControllers } = require("authorizenet");
 const authorizeConfig = require("../config/authorize");
 
 const addPaymentMethod = async (req, res) => {
   try {
+    console.log("DEBUG: Incoming addPaymentMethod request body:", req.body);
+
     const { userId } = req.params;
     const {
       methodType, // 'card' or 'bank'
       isDefault = false,
       cardNumber,
-      expiry, // "MMYY"
+      expiry,
       cardCode,
-      accountType, // 'checking' or 'savings'
+      accountType,
       routingNumber,
       accountNumber,
       accountHolderName,
       bankName,
     } = req.body;
 
-    console.log("DEBUG: Incoming addPaymentMethod request body:", req.body);
-
-    if (!methodType) {
+    if (!methodType)
       return res
         .status(400)
         .json({ success: false, message: "methodType is required" });
-    }
 
     const user = await User.findById(userId);
     if (!user)
@@ -33,40 +32,43 @@ const addPaymentMethod = async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
 
-    let customerProfileId = user.authorizeNetCustomerProfileId;
-
-    // Step 1: Create or log existing customer profile
+    // Step 1: Ensure Customer Profile exists
+    let customerProfileId = user.customerProfileId;
     if (!customerProfileId) {
-      console.log(
-        `DEBUG: Creating new Authorize.net customer profile for user: ${user._id}`
-      );
-
       const merchantCustomerId = require("crypto")
         .createHash("md5")
         .update(user._id.toString())
         .digest("hex")
         .substring(0, 20);
-
-      const profile = new APIContracts.CustomerProfileType();
-      profile.setMerchantCustomerId(merchantCustomerId);
-      profile.setDescription(`Profile for ${user.name}`);
-      profile.setEmail(
-        user.email ? user.email.substring(0, 255) : "noemail@example.com"
+      console.log(
+        "DEBUG: Creating new Authorize.net customer profile for user:",
+        user._id
       );
+      console.log("DEBUG: merchantCustomerId:", merchantCustomerId);
 
-      console.log("DEBUG: CustomerProfileType being sent:", profile);
+      const customerProfile = new APIContracts.CustomerProfileType();
+      customerProfile.setMerchantCustomerId(merchantCustomerId);
+
+      // Repeat name if only one word
+      const nameParts = user.name.trim().split(" ");
+      const firstName = nameParts[0];
+      const lastName = nameParts[1] || nameParts[0];
+
+      customerProfile.setDescription(
+        `Profile for ${firstName} ${lastName}`.substring(0, 255)
+      );
+      customerProfile.setEmail(user.email.substring(0, 255));
 
       const createRequest = new APIContracts.CreateCustomerProfileRequest();
       createRequest.setMerchantAuthentication(
         authorizeConfig.getMerchantAuthentication()
       );
-      createRequest.setProfile(profile);
+      createRequest.setProfile(customerProfile);
 
       const ctrl = new APIControllers.CreateCustomerProfileController(
         createRequest.getJSON()
       );
       ctrl.setEnvironment(authorizeConfig.getEndpoint());
-
       await new Promise((resolve) => ctrl.execute(() => resolve()));
       const apiResponse = ctrl.getResponse();
 
@@ -91,88 +93,64 @@ const addPaymentMethod = async (req, res) => {
       }
 
       customerProfileId = apiResponse.customerProfileId;
-      user.authorizeNetCustomerProfileId = customerProfileId;
+      user.customerProfileId = customerProfileId; // ✅ save in correct field
       await user.save();
-
       console.log("DEBUG: Created customerProfileId:", customerProfileId);
-    } else {
-      console.log(
-        "DEBUG: Using existing customerProfileId:",
-        customerProfileId
-      );
     }
 
     // Step 2: Prepare payment profile
-    let paymentTypeData = {};
+    const paymentProfile = new APIContracts.CustomerPaymentProfileType();
+
+    const nameParts = user.name.trim().split(" ");
+    const firstName = nameParts[0];
+    const lastName = nameParts[1] || nameParts[0];
+
+    const billTo = new APIContracts.CustomerAddressType();
+    billTo.setFirstName(firstName);
+    billTo.setLastName(lastName);
+    paymentProfile.setBillTo(billTo);
+
+    let paymentTypeData;
     if (methodType === "card") {
-      if (!cardNumber || !expiry)
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: "cardNumber and expiry are required",
-          });
+      const creditCard = new APIContracts.CreditCardType();
+      creditCard.setCardNumber(cardNumber);
+      creditCard.setExpirationDate(expiry);
+      if (cardCode) creditCard.setCardCode(cardCode);
 
-      paymentTypeData = {
-        cardNumber,
-        expiry,
-        cardCode: cardCode || undefined,
-      };
+      const paymentType = new APIContracts.PaymentType();
+      paymentType.setCreditCard(creditCard);
+      paymentProfile.setPayment(paymentType);
 
-      console.log("DEBUG: Card paymentTypeData to send:", paymentTypeData);
+      paymentTypeData = { cardNumber, expiry, cardCode };
     } else if (methodType === "bank") {
-      if (
-        !accountType ||
-        !routingNumber ||
-        !accountNumber ||
-        !accountHolderName
-      ) {
-        return res.status(400).json({
-          success: false,
-          message:
-            "accountType, routingNumber, accountNumber, accountHolderName are required for bank",
-        });
-      }
+      const bankAccount = new APIContracts.BankAccountType();
+      bankAccount.setAccountType(accountType.toUpperCase());
+      bankAccount.setRoutingNumber(routingNumber);
+      bankAccount.setAccountNumber(accountNumber);
+      bankAccount.setNameOnAccount(accountHolderName);
+      if (bankName) bankAccount.setBankName(bankName);
+
+      const paymentType = new APIContracts.PaymentType();
+      paymentType.setBankAccount(bankAccount);
+      paymentProfile.setPayment(paymentType);
 
       paymentTypeData = {
         accountType,
         routingNumber,
-        token: accountNumber,
+        accountNumber,
         accountHolderName,
-        bankName: bankName || "",
+        bankName,
       };
-
-      console.log("DEBUG: Bank paymentTypeData to send:", paymentTypeData);
     } else {
       return res
         .status(400)
         .json({ success: false, message: "Invalid methodType" });
     }
 
-    // Step 3: Create payment profile request
-    const paymentProfile = new APIContracts.CustomerPaymentProfileType();
-    const paymentType = new APIContracts.PaymentType();
-
-    if (methodType === "card") {
-      const creditCard = new APIContracts.CreditCardType();
-      creditCard.setCardNumber(paymentTypeData.cardNumber);
-      creditCard.setExpirationDate(paymentTypeData.expiry);
-      if (paymentTypeData.cardCode)
-        creditCard.setCardCode(paymentTypeData.cardCode);
-      paymentType.setCreditCard(creditCard);
-    } else {
-      const bankAccount = new APIContracts.BankAccountType();
-      bankAccount.setAccountType(paymentTypeData.accountType.toUpperCase());
-      bankAccount.setRoutingNumber(paymentTypeData.routingNumber);
-      bankAccount.setAccountNumber(paymentTypeData.token);
-      bankAccount.setNameOnAccount(paymentTypeData.accountHolderName);
-      if (paymentTypeData.bankName)
-        bankAccount.setBankName(paymentTypeData.bankName);
-      paymentType.setBankAccount(bankAccount);
-    }
-
-    paymentProfile.setPayment(paymentType);
     paymentProfile.setDefaultPaymentProfile(isDefault);
+
+    console.log("DEBUG: Payment data to send:", paymentTypeData);
+    console.log("DEBUG: BillTo info:", { firstName, lastName });
 
     const createPaymentProfileRequest =
       new APIContracts.CreateCustomerPaymentProfileRequest();
@@ -183,7 +161,7 @@ const addPaymentMethod = async (req, res) => {
     createPaymentProfileRequest.setPaymentProfile(paymentProfile);
     createPaymentProfileRequest.setValidationMode(
       APIContracts.ValidationModeEnum.TESTMODE
-    ); // sandbox
+    );
 
     console.log(
       "DEBUG: CreateCustomerPaymentProfile request JSON:",
@@ -195,6 +173,7 @@ const addPaymentMethod = async (req, res) => {
         createPaymentProfileRequest.getJSON()
       );
     paymentCtrl.setEnvironment(authorizeConfig.getEndpoint());
+
     await new Promise((resolve) => paymentCtrl.execute(() => resolve()));
     const paymentProfileResponse = paymentCtrl.getResponse();
 
@@ -221,39 +200,44 @@ const addPaymentMethod = async (req, res) => {
 
     const customerPaymentProfileId =
       paymentProfileResponse.customerPaymentProfileId;
-    console.log("DEBUG: Added paymentProfileId:", customerPaymentProfileId);
 
-    // Step 4: Store non-sensitive info in DB
-    const paymentData = {
+    // Step 3: Save in user DB with correct fields
+    const paymentDataToSave = {
       methodType,
-      paymentProfileId: customerPaymentProfileId,
+      paymentProfileId: customerPaymentProfileId, // ✅ must match schema
       isDefault,
     };
-
     if (methodType === "card") {
-      paymentData.last4 = cardNumber.slice(-4);
-      paymentData.brand = "Unknown"; // optional: detect brand
-      paymentData.expiry = expiry;
+      paymentDataToSave.last4 = cardNumber.slice(-4);
+      paymentDataToSave.expiryMonth = expiry.slice(0, 2);
+      paymentDataToSave.expiryYear = expiry.slice(2);
+      paymentDataToSave.brand = "Unknown";
     } else {
-      paymentData.accountType = accountType;
-      paymentData.routingNumber = routingNumber;
-      paymentData.accountHolderName = accountHolderName;
-      paymentData.bankName = bankName || "";
+      paymentDataToSave.accountType = accountType;
+      paymentDataToSave.routingNumber = routingNumber;
+      paymentDataToSave.accountHolderName = accountHolderName;
+      paymentDataToSave.bankName = bankName || "";
     }
 
-    await user.addPaymentMethod(paymentData);
+    await user.addPaymentMethod(paymentDataToSave);
 
-    res.status(201).json({
-      success: true,
-      paymentMethods: user.paymentMethods,
-    });
+    res
+      .status(201)
+      .json({ success: true, paymentMethods: user.paymentMethods });
+    console.log(
+      "DEBUG: Added paymentProfileId:",
+      customerPaymentProfileId,
+      "to user DB"
+    );
   } catch (err) {
     console.error("Add payment method error:", err);
-    res.status(500).json({
-      success: false,
-      message: "Failed to add payment method",
-      error: err.message,
-    });
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Failed to add payment method",
+        error: err.message,
+      });
   }
 };
 
