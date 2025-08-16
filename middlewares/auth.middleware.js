@@ -7,7 +7,6 @@ const User = require("../models/User"); // adjust path if needed
  */
 const authenticate = async (req, res, next) => {
   try {
-    // Get token from cookie or Authorization header
     const token =
       req.cookies?.token || req.header("Authorization")?.replace("Bearer ", "");
 
@@ -18,7 +17,6 @@ const authenticate = async (req, res, next) => {
       });
     }
 
-    // Verify token
     let decoded;
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -30,8 +28,8 @@ const authenticate = async (req, res, next) => {
       });
     }
 
-    // Find user by ID and exclude password
-    const user = await User.findById(decoded.userId).select("password");
+    // Load user with role (and any other needed fields)
+    const user = await User.findById(decoded.userId).select("-password");
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -39,9 +37,8 @@ const authenticate = async (req, res, next) => {
       });
     }
 
-    // Attach user to request
     req.user = user;
-    req.userId = user._id; // handy shortcut
+    req.userId = user._id;
     next();
   } catch (err) {
     console.error("Auth middleware error:", err);

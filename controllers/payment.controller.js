@@ -21,16 +21,18 @@ const addPaymentMethod = async (req, res) => {
       bankName,
     } = req.body;
 
-    if (!methodType)
+    if (!methodType) {
       return res
         .status(400)
         .json({ success: false, message: "methodType is required" });
+    }
 
     const user = await User.findById(userId);
-    if (!user)
+    if (!user) {
       return res
         .status(404)
         .json({ success: false, message: "User not found" });
+    }
 
     // Step 1: Ensure Customer Profile exists
     let customerProfileId = user.customerProfileId;
@@ -40,6 +42,7 @@ const addPaymentMethod = async (req, res) => {
         .update(user._id.toString())
         .digest("hex")
         .substring(0, 20);
+
       console.log(
         "DEBUG: Creating new Authorize.net customer profile for user:",
         user._id
@@ -49,7 +52,7 @@ const addPaymentMethod = async (req, res) => {
       const customerProfile = new APIContracts.CustomerProfileType();
       customerProfile.setMerchantCustomerId(merchantCustomerId);
 
-      // Repeat name if only one word
+      // Split name into first/last
       const nameParts = user.name.trim().split(" ");
       const firstName = nameParts[0];
       const lastName = nameParts[1] || nameParts[0];
@@ -93,7 +96,7 @@ const addPaymentMethod = async (req, res) => {
       }
 
       customerProfileId = apiResponse.customerProfileId;
-      user.customerProfileId = customerProfileId; // ✅ save in correct field
+      user.customerProfileId = customerProfileId;
       await user.save();
       console.log("DEBUG: Created customerProfileId:", customerProfileId);
     }
@@ -124,7 +127,10 @@ const addPaymentMethod = async (req, res) => {
       paymentTypeData = { cardNumber, expiry, cardCode };
     } else if (methodType === "bank") {
       const bankAccount = new APIContracts.BankAccountType();
-      bankAccount.setAccountType(accountType.toUpperCase());
+
+      // ✅ FIX: use lowercase for Authorize.Net enum
+      const normalizedType = (accountType || "").toLowerCase();
+      bankAccount.setAccountType(normalizedType);
       bankAccount.setRoutingNumber(routingNumber);
       bankAccount.setAccountNumber(accountNumber);
       bankAccount.setNameOnAccount(accountHolderName);
@@ -135,7 +141,7 @@ const addPaymentMethod = async (req, res) => {
       paymentProfile.setPayment(paymentType);
 
       paymentTypeData = {
-        accountType,
+        accountType: normalizedType,
         routingNumber,
         accountNumber,
         accountHolderName,
@@ -201,19 +207,20 @@ const addPaymentMethod = async (req, res) => {
     const customerPaymentProfileId =
       paymentProfileResponse.customerPaymentProfileId;
 
-    // Step 3: Save in user DB with correct fields
+    // Step 3: Save in user DB
     const paymentDataToSave = {
       methodType,
-      paymentProfileId: customerPaymentProfileId, // ✅ must match schema
+      paymentProfileId: customerPaymentProfileId,
       isDefault,
     };
+
     if (methodType === "card") {
       paymentDataToSave.last4 = cardNumber.slice(-4);
       paymentDataToSave.expiryMonth = expiry.slice(0, 2);
       paymentDataToSave.expiryYear = expiry.slice(2);
       paymentDataToSave.brand = "Unknown";
     } else {
-      paymentDataToSave.accountType = accountType;
+      paymentDataToSave.accountType = accountType.toLowerCase();
       paymentDataToSave.routingNumber = routingNumber;
       paymentDataToSave.accountHolderName = accountHolderName;
       paymentDataToSave.bankName = bankName || "";
@@ -231,13 +238,11 @@ const addPaymentMethod = async (req, res) => {
     );
   } catch (err) {
     console.error("Add payment method error:", err);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Failed to add payment method",
-        error: err.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Failed to add payment method",
+      error: err.message,
+    });
   }
 };
 

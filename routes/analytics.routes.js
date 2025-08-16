@@ -7,6 +7,7 @@ const {
   adminTimezoneUsage,
   userGeneralStats,
   userUsageStats,
+  userActivityTypeStats,
 } = require("../controllers/analytics.controller");
 
 // Admin routes
@@ -27,5 +28,6 @@ router.get(
 // User routes
 router.get("/user/:userId/general", authenticate, userGeneralStats);
 router.get("/user/:userId/usage", authenticate, userUsageStats);
+router.get("/user/:userId/activity", authenticate, userActivityTypeStats);
 
 module.exports = router;

@@ -1,3 +1,4 @@
+// controllers/billing.controller.js
 const User = require("../models/User");
 const Usage = require("../models/Usage");
 const Transaction = require("../models/Transaction");
@@ -58,6 +59,8 @@ const processPayment = (user, amount, note) => {
           return resolve({
             success: true,
             transactionId: transactionResponse.getTransId(),
+            authCode: transactionResponse.getAuthCode(),
+            responseCode: transactionResponse.getResponseCode(),
             amount,
             message: transactionResponse
               .getMessages()
@@ -122,19 +125,15 @@ const chargeUsersByIds = async (userIds, note, res) => {
               message: "User not found",
             };
 
-          console.log("=== User from DB ===", user);
-
           const unpaidUsages = await Usage.find({
             user: userId,
             isPaid: false,
           });
-          console.log("=== Unpaid usages ===", unpaidUsages);
 
           const totalMinutes = unpaidUsages.reduce(
             (sum, u) => sum + (u.durationMinutes || 0),
             0
           );
-          console.log(`Total minutes for user ${user.email}:`, totalMinutes);
 
           if (totalMinutes <= 0)
             return {
@@ -145,18 +144,28 @@ const chargeUsersByIds = async (userIds, note, res) => {
 
           const amount = totalMinutes * RATE_PER_MINUTE;
 
-          const paymentInfo = {
-            amount,
-            note,
-            customerProfileId: user.customerProfileId,
-            paymentProfileId: user.paymentMethods.find((pm) => pm.isDefault)
-              ?.paymentProfileId,
-          };
-          console.log("=== Payment info ===", paymentInfo);
-
+          // 🔑 Call payment processor
           const paymentResult = await processPayment(user, amount, note);
 
-          // Update usages as paid
+          // ✅ Save transaction to DB
+          const transaction = new Transaction({
+            user: user._id,
+            usageItems: unpaidUsages.map((u) => u._id),
+            amount,
+            methodType: paymentResult.methodType,
+            customerProfileId: paymentResult.customerProfileId,
+            paymentProfileId: paymentResult.paymentProfileId,
+            transactionId: paymentResult.transactionId,
+            authCode: paymentResult.authCode || null,
+            responseCode: paymentResult.responseCode || null,
+            responseMessage: paymentResult.message || null,
+            status: paymentResult.success ? "success" : "failed",
+            failureReason: paymentResult.success ? null : paymentResult.message,
+            note: note || "Manual charge",
+          });
+          await transaction.save();
+
+          // ✅ Mark usages as paid
           await Usage.updateMany(
             { _id: { $in: unpaidUsages.map((u) => u._id) } },
             {
@@ -169,25 +178,13 @@ const chargeUsersByIds = async (userIds, note, res) => {
             }
           );
 
-          // Save transaction
-          const transaction = new Transaction({
-            user: user._id,
-            usageItems: unpaidUsages.map((u) => u._id),
-            amount,
-            methodType: paymentResult.methodType,
-            transactionId: paymentResult.transactionId,
-            status: "success",
-            note: note || "Manual charge",
-          });
-          await transaction.save();
-
           return {
             user: user.email,
             amount: paymentResult.amount,
             paidUsages: unpaidUsages.length,
             paymentMethod: paymentResult.methodType,
             status: "success",
-            transactionId: paymentResult.transactionId,
+            transactionId: transaction._id,
             message: paymentResult.message,
           };
         } catch (err) {
