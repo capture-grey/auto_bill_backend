@@ -51,6 +51,7 @@ Usage-based SaaS billing platform backend built with Node.js, Express, MongoDB, 
 3. **Configure environment variables**
 
    Create a `.env` file:
+   ```
    PORT=5000
    MONGO_CONNECTION_STRING=your_mongodb_uri
    JWT_SECRET=your_jwt_secret
