@@ -44,7 +44,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/usage", usageRoutes);
 app.use("/api/billing", billingRoutes);
 app.use("/api/analytics", analyticsRoutes);
-app.use("/api/payment", paymentRoutes);
+
 
 app.use("/api/charge", chargeRouter);
 

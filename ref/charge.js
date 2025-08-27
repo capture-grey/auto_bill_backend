@@ -1,3 +1,6 @@
+//a simple controller to check if connection with authorize.net is successful and bills are showing in dashboard
+//transaction not tracked in database
+
 const express = require("express");
 const router = express.Router();
 const authorizeConfig = require("../config/authorize");
@@ -22,12 +25,12 @@ router.post("/", async (req, res) => {
     if (isNaN(amount) || amount <= 0) {
       return res.status(400).json({ success: false, error: "Invalid amount" });
     }
-    cardNumber = cardNumber.replace(/\s+/g, ""); // remove spaces
+    cardNumber = cardNumber.replace(/\s+/g, "");
 
     // Create credit card object
     const creditCard = new APIContracts.CreditCardType();
     creditCard.setCardNumber(cardNumber);
-    creditCard.setExpirationDate(expirationDate); // format: YYYY-MM
+    creditCard.setExpirationDate(expirationDate);
     if (cardCode) creditCard.setCardCode(cardCode);
 
     // Create payment type

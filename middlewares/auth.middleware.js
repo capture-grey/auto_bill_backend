@@ -1,6 +1,6 @@
 // middlewares/auth.middleware.js
 const jwt = require("jsonwebtoken");
-const User = require("../models/User"); // adjust path if needed
+const User = require("../models/User");
 
 /**
  * Authenticate user via JWT (cookie or header)
@@ -28,7 +28,6 @@ const authenticate = async (req, res, next) => {
       });
     }
 
-    // Load user with role (and any other needed fields)
     const user = await User.findById(decoded.userId).select("-password");
     if (!user) {
       return res.status(401).json({
@@ -53,15 +52,54 @@ const authenticate = async (req, res, next) => {
  * Role-based authorization middleware
  * @param {Array} roles - allowed roles, e.g., ['admin']
  */
+// const authorize = (roles = []) => {
+//   return (req, res, next) => {
+//     if (!roles.includes(req.user.role)) {
+//       return res.status(403).json({
+//         success: false,
+//         message: "Forbidden: insufficient permissions",
+//       });
+//     }
+//     next();
+//   };
+// };
+
 const authorize = (roles = []) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({
-        success: false,
-        message: "Forbidden: insufficient permissions",
-      });
+  return async (req, res, next) => {
+    try {
+      if (!req.user || !req.user.id) {
+        return res.status(401).json({
+          success: false,
+          message: "Unauthorized: No user info in token",
+        });
+      }
+
+      // fetch  role
+      const currentUser = await User.findById(req.user.id).select("role");
+      if (!currentUser) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found",
+        });
+      }
+
+      // check role
+      if (!roles.includes(currentUser.role)) {
+        return res.status(403).json({
+          success: false,
+          message: "Forbidden: insufficient permissions",
+          requiredRoles: roles,
+          yourRole: currentUser.role,
+        });
+      }
+
+      // new(current) role assign
+      req.user.role = currentUser.role;
+      next();
+    } catch (err) {
+      console.error("Authorization error:", err);
+      res.status(500).json({ success: false, message: "Server error" });
     }
-    next();
   };
 };
 

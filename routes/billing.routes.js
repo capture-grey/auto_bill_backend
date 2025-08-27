@@ -8,6 +8,7 @@ const {
 
 // Charge all users
 router.post("/manual", authenticate, chargeAllUsers);
+// charge  specific users
 router.post("/manual/users", authenticate, chargeSelectedUsers);
 
 module.exports = router;

@@ -1,0 +1,2258 @@
+{
+	"info": {
+		"_postman_id": "3c4a88c6-03a3-4f2f-b5f3-b2f501e38f21",
+		"name": "octo_bill customer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27525903"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"Password123!\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login - admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"Password123!\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "300",
+									"type": "text"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"12c-m6el5gqwYKx4eTzycUFZZgXu5xM\"",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Aug 2025 05:18:07 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"type": "text"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkNzBiODczNzNlNGE4YTNiNWViZTgiLCJpYXQiOjE3NTUxNDg2ODcsImV4cCI6MTc1NTc1MzQ4N30.BXRgHbdYVqJeapEkHU-ThrqWYxqRj6qVlQUCBnDk9cU\",\n    \"user\": {\n        \"name\": \"Admin Admin\",\n        \"email\": \"alice@example.com\",\n        \"role\": \"admin\",\n        \"timezone\": \"Asia/Dhaka\"\n    }\n}"
+						},
+						{
+							"name": "login - customer13",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"customer13@example.com\",\n  \"password\": \"StrongPassword123\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "378",
+									"type": "text"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17a-VFaZGulSNF/Q/IpnrkRDUargZ0k\"",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Aug 2025 10:39:52 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"type": "text"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGEwMGQzOGU5NTczNjQ5ZWVlZDBjYzkiLCJpYXQiOjE3NTYyOTExOTIsImV4cCI6MTc1Njg5NTk5Mn0.Q5va5p0s_fF1cidJzuvbXdM5lYSWdu7MqiWd_QT2ud0\",\n    \"user\": {\n        \"id\": \"68a00d38e9573649eeed0cc9\",\n        \"name\": \"Customer13 Example\",\n        \"email\": \"customer13@example.com\",\n        \"role\": \"user\",\n        \"timezone\": \"America/New_York\",\n        \"authorizeNetProfileId\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Customer9 Example\",\n  \"email\": \"customer9@example.com\",\n  \"password\": \"StrongPassword123\",\n  \"timezone\": \"America/New_York\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "register - admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Customer Example\",\n  \"email\": \"customer@example.com\",\n  \"password\": \"StrongPassword123\",\n  \"timezone\": \"Asia/Dhaka\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/auth/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "359",
+									"type": "text"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"167-ArX0vX90UBT6Cl5tjEApws37kbg\"",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 15 Aug 2025 11:42:32 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"type": "text"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlmMWQyODEyODBhZmIwY2U0NTIyYjAiLCJpYXQiOjE3NTUyNTgxNTIsImV4cCI6MTc1NTg2Mjk1Mn0.Uk7G5nEZu_d9t8z90Sh-qC4Ao_sde7RZpK3-PjTwO_8\",\n    \"user\": {\n        \"id\": \"689f1d281280afb0ce4522b0\",\n        \"name\": \"Customer Example\",\n        \"email\": \"customer@example.com\",\n        \"role\": \"user\",\n        \"timezone\": \"Asia/Dhaka\",\n        \"paymentMethods\": []\n    }\n}"
+						},
+						{
+							"name": "register -customer13",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Customer13 Example\",\n  \"email\": \"customer13@example.com\",\n  \"password\": \"StrongPassword123\",\n  \"timezone\": \"America/New_York\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/auth/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "369",
+									"type": "text"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"171-CczF9mlE34+wrpRzFcZZb5aF6M8\"",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Aug 2025 04:46:49 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"type": "text"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGEwMGQzOGU5NTczNjQ5ZWVlZDBjYzkiLCJpYXQiOjE3NTUzMTk2MDksImV4cCI6MTc1NTkyNDQwOX0.clA4ygTSJeLj309HX0gIoYJIZ_OHg_Ud-HPvZmd9kFY\",\n    \"user\": {\n        \"id\": \"68a00d38e9573649eeed0cc9\",\n        \"name\": \"Customer13 Example\",\n        \"email\": \"customer13@example.com\",\n        \"role\": \"user\",\n        \"timezone\": \"America/New_York\",\n        \"paymentMethods\": []\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Add Payment Details",
+			"item": [
+				{
+					"name": "add payment details -card",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkYzFkMTRlNTc4Yjc3Yzk0NTZhZDQiLCJpYXQiOjE3NTUxNjkyMzQsImV4cCI6MTc1NTc3NDAzNH0.OtN8f2eqft19H42Y021z9-4fKuZvaGACWCKS2f5guPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"methodType\": \"card\",\n  \"paymentToken\": \"card_tok_123456\",\n  \"isDefault\": true,\n  \"last4\": \"4242\",\n  \"brand\": \"Visa\",\n  \"expiry\": \"2026-12\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/payment/689dc1d14e578b77c9456ad4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"payment",
+								"689dc1d14e578b77c9456ad4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add payment details - bank",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkYzFkMTRlNTc4Yjc3Yzk0NTZhZDQiLCJpYXQiOjE3NTUxNjkyMzQsImV4cCI6MTc1NTc3NDAzNH0.OtN8f2eqft19H42Y021z9-4fKuZvaGACWCKS2f5guPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"methodType\": \"bank\",\n  \"paymentToken\": \"bank_tok_987654\",\n  \"isDefault\": true,\n  \"accountType\": \"checking\",\n  \"routingNumber\": \"125000024\",\n  \"accountHolderName\": \"John Doe\",\n  \"bankName\": \"Bank of America\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/payment/689de4b998c2be25daeb3244",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"payment",
+								"689de4b998c2be25daeb3244"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "add payment details - bank",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"methodType\": \"bank\",\n  \"paymentToken\": \"bank_tok_987654\",\n  \"isDefault\": true,\n  \"accountType\": \"checking\",\n  \"routingNumber\": \"125000024\",\n  \"accountHolderName\": \"John Doe\",\n  \"bankName\": \"Bank of America\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/payment/689de4b998c2be25daeb3244",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"payment",
+										"689de4b998c2be25daeb3244"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "252",
+									"type": "text"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"fc-A6lfn4+s1e4Td8St3rg/aeTXA7A\"",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Aug 2025 14:13:11 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"type": "text"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"paymentMethods\": [\n        {\n            \"methodType\": \"bank\",\n            \"token\": \"bank_tok_987654\",\n            \"accountType\": \"checking\",\n            \"routingNumber\": \"125000024\",\n            \"accountHolderName\": \"John Doe\",\n            \"bankName\": \"Bank of America\",\n            \"isDefault\": true,\n            \"createdAt\": \"2025-08-14T14:13:11.467Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "adding a new payment method (e.g Card) as default over existing payment method (e.g. bank) which was set default earlier overrides old choice and sets new method as default."
+		},
+		{
+			"name": "Service - Start End",
+			"item": [
+				{
+					"name": "start service",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlmM2VhZDlmN2IxOTM2ZWVmYjA1MjIiLCJpYXQiOjE3NTUyNzEzOTUsImV4cCI6MTc1NTg3NjE5NX0.r_EVIYvzTn3QcJ79LJLpbjfzHCJnKzBSvIm5pXfVQIg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"activityType\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usage/start/689f3ead9f7b1936eefb0522",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usage",
+								"start",
+								"689f3ead9f7b1936eefb0522"
+							]
+						},
+						"description": "starting a service of same token type without ending the previous one is forbidden, but starting multiple services of different types alllowed."
+					},
+					"response": [
+						{
+							"name": "start service - card",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"activityType\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/usage/start/689f3ead9f7b1936eefb0522",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"usage",
+										"start",
+										"689f3ead9f7b1936eefb0522"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "376",
+									"type": "text"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"178-qNPZr+Ly3hn9mq75sztiAANODNI\"",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 15 Aug 2025 15:27:01 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"type": "text"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"usage\": {\n        \"user\": \"689f3ead9f7b1936eefb0522\",\n        \"activityType\": 1,\n        \"startTime\": \"2025-08-15T15:27:01.826Z\",\n        \"endTime\": null,\n        \"durationMinutes\": 0,\n        \"isPaid\": false,\n        \"paymentReference\": null,\n        \"methodType\": null,\n        \"customerProfileId\": null,\n        \"paymentProfileId\": null,\n        \"_id\": \"689f51c5edce07455809a59f\",\n        \"createdAt\": \"2025-08-15T15:27:01.832Z\",\n        \"updatedAt\": \"2025-08-15T15:27:01.832Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "end service",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlmM2VhZDlmN2IxOTM2ZWVmYjA1MjIiLCJpYXQiOjE3NTUyNzEzOTUsImV4cCI6MTc1NTg3NjE5NX0.r_EVIYvzTn3QcJ79LJLpbjfzHCJnKzBSvIm5pXfVQIg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"activityType\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usage/end/689f3ead9f7b1936eefb0522",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usage",
+								"end",
+								"689f3ead9f7b1936eefb0522"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "end service - card",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"activityType\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/usage/end/689f3ead9f7b1936eefb0522",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"usage",
+										"end",
+										"689f3ead9f7b1936eefb0522"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "416",
+									"type": "text"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1a0-wrWfdDUMd8+H65o+thC00pu0KZM\"",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 15 Aug 2025 15:39:52 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"type": "text"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"usage\": {\n        \"_id\": \"689f546f1b2aaf959f2a7abc\",\n        \"user\": \"689f3ead9f7b1936eefb0522\",\n        \"activityType\": 1,\n        \"startTime\": \"2025-08-15T15:38:23.843Z\",\n        \"endTime\": \"2025-08-15T15:39:52.716Z\",\n        \"durationMinutes\": 2,\n        \"isPaid\": false,\n        \"paymentReference\": null,\n        \"lastPaidAt\": null,\n        \"methodType\": null,\n        \"customerProfileId\": null,\n        \"paymentProfileId\": null,\n        \"createdAt\": \"2025-08-15T15:38:23.846Z\",\n        \"updatedAt\": \"2025-08-15T15:39:52.721Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Charge Bills",
+			"item": [
+				{
+					"name": "manual charge selected users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userIds\": [\"689f3ead9f7b1936eefb0522\"],\n  \"note\": \"Manual test charge\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/billing/manual/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"billing",
+								"manual",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "manual charge selected users",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userIds\": [\"689f3ead9f7b1936eefb0522\"],\n  \"note\": \"Manual test charge\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/billing/manual/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"billing",
+										"manual",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "295",
+									"type": "text"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"127-yW/KJ4ERiahgBF2nVbhFLZE6WK8\"",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Aug 2025 04:45:25 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"type": "text"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"summary\": {\n        \"total\": 1,\n        \"success\": 1,\n        \"failed\": 0,\n        \"errors\": 0\n    },\n    \"results\": [\n        {\n            \"user\": \"customer12@example.com\",\n            \"amount\": 0.30000000000000004,\n            \"paidUsages\": 1,\n            \"paymentMethod\": \"card\",\n            \"status\": \"success\",\n            \"transactionId\": \"68a00ce4e9573649eeed0cc4\",\n            \"message\": \"This transaction has been approved.\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "manual charge all users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"note\": \"Manual test charge\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/billing/manual/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"billing",
+								"manual",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "manual charge selected users bank Copy",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"note\": \"Manual test charge\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/billing/manual/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"billing",
+										"manual",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "322",
+									"type": "text"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"142-GvMfHiP96xZV+o+slJsbyeunvZ0\"",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Aug 2025 05:45:46 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"type": "text"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"summary\": {\n        \"total\": 3,\n        \"success\": 0,\n        \"failed\": 3,\n        \"errors\": 0\n    },\n    \"results\": [\n        {\n            \"user\": \"alice@example.com\",\n            \"status\": \"skipped\",\n            \"message\": \"No unpaid usage\"\n        },\n        {\n            \"user\": \"customer12@example.com\",\n            \"status\": \"skipped\",\n            \"message\": \"No unpaid usage\"\n        },\n        {\n            \"user\": \"customer13@example.com\",\n            \"status\": \"skipped\",\n            \"message\": \"No unpaid usage\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "for ongoing services current duration is calculated for billing and to keep track of only unpaid durations \"lastPaidAt\" flag is used."
+		},
+		{
+			"name": "Analytics",
+			"item": [
+				{
+					"name": "Admin Analytics",
+					"item": [
+						{
+							"name": "admin - timezone usage",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkNzBiODczNzNlNGE4YTNiNWViZTgiLCJpYXQiOjE3NTUzMjM2MjEsImV4cCI6MTc1NTkyODQyMX0.lWb_NpvlknBORsMjVYBuW-BJh52G6vF2QbnACIia23o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/admin/timezone-usage",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"admin",
+										"timezone-usage"
+									]
+								},
+								"description": "Shows overall (total) usage statistics by timezone in minutes"
+							},
+							"response": [
+								{
+									"name": "admin - timezone usage",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/admin/timezone-usage",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"admin",
+												"timezone-usage"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "41",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"29-4eUkvUllIYj+LlZVJ61uY7TlADE\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 06:39:51 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timezoneUsage\": {\n        \"America/New_York\": 10\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin - timezone usage (range)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkNzBiODczNzNlNGE4YTNiNWViZTgiLCJpYXQiOjE3NTUzMjM2MjEsImV4cCI6MTc1NTkyODQyMX0.lWb_NpvlknBORsMjVYBuW-BJh52G6vF2QbnACIia23o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/admin/timezone-usage?from=2025-01-01&to=2025-12-31",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"admin",
+										"timezone-usage"
+									],
+									"query": [
+										{
+											"key": "from",
+											"value": "2025-01-01"
+										},
+										{
+											"key": "to",
+											"value": "2025-12-31"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "admin - timezone usage (range)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/admin/timezone-usage?from=2025-01-01&to=2025-12-31",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"admin",
+												"timezone-usage"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2025-01-01"
+												},
+												{
+													"key": "to",
+													"value": "2025-12-31"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "41",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"29-4eUkvUllIYj+LlZVJ61uY7TlADE\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 06:38:43 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timezoneUsage\": {\n        \"America/New_York\": 10\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin - top user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkNzBiODczNzNlNGE4YTNiNWViZTgiLCJpYXQiOjE3NTUzMjM2MjEsImV4cCI6MTc1NTkyODQyMX0.lWb_NpvlknBORsMjVYBuW-BJh52G6vF2QbnACIia23o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/admin/top-user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"admin",
+										"top-user"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "admin - top user",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/admin/top-user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"admin",
+												"top-user"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "168",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a8-IMNnJ7oJhaTxeFpNmEP02xAjC74\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 06:00:25 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"user\": {\n        \"_id\": \"689f3ead9f7b1936eefb0522\",\n        \"name\": \"Customer12 Example\",\n        \"email\": \"customer12@example.com\",\n        \"id\": \"689f3ead9f7b1936eefb0522\"\n    },\n    \"totalPaid\": 0.30000000000000004\n}"
+								}
+							]
+						},
+						{
+							"name": "admin - top user range",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkNzBiODczNzNlNGE4YTNiNWViZTgiLCJpYXQiOjE3NTUzMjM2MjEsImV4cCI6MTc1NTkyODQyMX0.lWb_NpvlknBORsMjVYBuW-BJh52G6vF2QbnACIia23o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/admin/top-user?from=2025-01-01&to=2025-12-31",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"admin",
+										"top-user"
+									],
+									"query": [
+										{
+											"key": "from",
+											"value": "2025-01-01"
+										},
+										{
+											"key": "to",
+											"value": "2025-12-31"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "admin - top user range",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/admin/top-user?from=2025-01-01&to=2025-12-31",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"admin",
+												"top-user"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2025-01-01"
+												},
+												{
+													"key": "to",
+													"value": "2025-12-31"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "168",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a8-IMNnJ7oJhaTxeFpNmEP02xAjC74\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 06:06:29 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"user\": {\n        \"_id\": \"689f3ead9f7b1936eefb0522\",\n        \"name\": \"Customer12 Example\",\n        \"email\": \"customer12@example.com\",\n        \"id\": \"689f3ead9f7b1936eefb0522\"\n    },\n    \"totalPaid\": 0.30000000000000004\n}"
+								}
+							]
+						},
+						{
+							"name": "admin - total number+minute+revenue",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkNzBiODczNzNlNGE4YTNiNWViZTgiLCJpYXQiOjE3NTUzMjM2MjEsImV4cCI6MTc1NTkyODQyMX0.lWb_NpvlknBORsMjVYBuW-BJh52G6vF2QbnACIia23o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/admin/general",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"admin",
+										"general"
+									]
+								},
+								"description": "Accumulate totale service consumed by all users(minutes)\n\nTotal bills charged(USD)"
+							},
+							"response": [
+								{
+									"name": "admin - total number+minute+revenue",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/admin/general",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"admin",
+												"general"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "53",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"35-vujWdKtVXE0veroGgP7eEvpSRP8\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 05:57:08 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"totalUsers\": 3,\n    \"totalMinutes\": 10,\n    \"totalRevenue\": 0.5\n}"
+								}
+							]
+						},
+						{
+							"name": "admin - total number+minute+revenue  (range)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkNzBiODczNzNlNGE4YTNiNWViZTgiLCJpYXQiOjE3NTUzMjM2MjEsImV4cCI6MTc1NTkyODQyMX0.lWb_NpvlknBORsMjVYBuW-BJh52G6vF2QbnACIia23o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/admin/general",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"admin",
+										"general"
+									]
+								},
+								"description": "Accumulate totale service consumed by all users(minutes)\n\nTotal bills charged(USD) in a certain date range"
+							},
+							"response": [
+								{
+									"name": "admin - total number+minute+revenue range",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/admin/general?from=2025-01-01&to=2025-12-31",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"admin",
+												"general"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2025-01-01"
+												},
+												{
+													"key": "to",
+													"value": "2025-12-31"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "53",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"35-vujWdKtVXE0veroGgP7eEvpSRP8\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 06:05:00 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"totalUsers\": 3,\n    \"totalMinutes\": 10,\n    \"totalRevenue\": 0.5\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "User Analytics",
+					"item": [
+						{
+							"name": "User - total minute + bill",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGEwMGQzOGU5NTczNjQ5ZWVlZDBjYzkiLCJpYXQiOjE3NTUzMTk2MDksImV4cCI6MTc1NTkyNDQwOX0.clA4ygTSJeLj309HX0gIoYJIZ_OHg_Ud-HPvZmd9kFY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/user/68a00d38e9573649eeed0cc9/general",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"user",
+										"68a00d38e9573649eeed0cc9",
+										"general"
+									]
+								},
+								"description": "service duration consumed by a user(minute)\n\noverall charged amount till that timepoint(USD)"
+							},
+							"response": [
+								{
+									"name": "User - total minute + bill",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/user/68a00d38e9573649eeed0cc9/general",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"user",
+												"68a00d38e9573649eeed0cc9",
+												"general"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"24-0+N2ENiZkxSS2t9cH8Wj/idezf0\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 06:12:32 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"totalMinutes\": 2,\n    \"totalBilled\": 0.2\n}"
+								}
+							]
+						},
+						{
+							"name": "User - total minute + bill (range)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGEwMGQzOGU5NTczNjQ5ZWVlZDBjYzkiLCJpYXQiOjE3NTUzMTk2MDksImV4cCI6MTc1NTkyNDQwOX0.clA4ygTSJeLj309HX0gIoYJIZ_OHg_Ud-HPvZmd9kFY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/user/68a00d38e9573649eeed0cc9/general?from=2025-01-01&to=2025-12-31",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"user",
+										"68a00d38e9573649eeed0cc9",
+										"general"
+									],
+									"query": [
+										{
+											"key": "from",
+											"value": "2025-01-01"
+										},
+										{
+											"key": "to",
+											"value": "2025-12-31"
+										}
+									]
+								},
+								"description": "service duration consumed by a user(minute)\n\noverall charged amount till that timepoint(USD)\n\nin a specific date range"
+							},
+							"response": [
+								{
+									"name": "User - total minute + bill (range)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/user/68a00d38e9573649eeed0cc9/general?from=2025-01-01&to=2025-12-31",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"user",
+												"68a00d38e9573649eeed0cc9",
+												"general"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2025-01-01"
+												},
+												{
+													"key": "to",
+													"value": "2025-12-31"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"24-0+N2ENiZkxSS2t9cH8Wj/idezf0\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 06:10:55 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"totalMinutes\": 2,\n    \"totalBilled\": 0.2\n}"
+								}
+							]
+						},
+						{
+							"name": "User - daily usage",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGEwMGQzOGU5NTczNjQ5ZWVlZDBjYzkiLCJpYXQiOjE3NTUzMTk2MDksImV4cCI6MTc1NTkyNDQwOX0.clA4ygTSJeLj309HX0gIoYJIZ_OHg_Ud-HPvZmd9kFY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/user/68a00d38e9573649eeed0cc9/usage",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"user",
+										"68a00d38e9573649eeed0cc9",
+										"usage"
+									]
+								},
+								"description": "daily usage of last 7 days"
+							},
+							"response": [
+								{
+									"name": "User - usage",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/user/68a00d38e9573649eeed0cc9/usage",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"user",
+												"68a00d38e9573649eeed0cc9",
+												"usage"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "32",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"20-ylPOiAE8pwMCKPlWaTMghUEET28\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 06:16:56 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"usage\": {\n        \"2025-08-15\": {\n            \"1\": 2\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "User - usage by activity",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGEwMGQzOGU5NTczNjQ5ZWVlZDBjYzkiLCJpYXQiOjE3NTUzMTk2MDksImV4cCI6MTc1NTkyNDQwOX0.clA4ygTSJeLj309HX0gIoYJIZ_OHg_Ud-HPvZmd9kFY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/user/68a00d38e9573649eeed0cc9/activity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"user",
+										"68a00d38e9573649eeed0cc9",
+										"activity"
+									]
+								},
+								"description": "daily usage by activity type"
+							},
+							"response": [
+								{
+									"name": "User - usage by activity",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/user/68a00d38e9573649eeed0cc9/activity",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"user",
+												"68a00d38e9573649eeed0cc9",
+												"activity"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "27",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1b-2ipHs4QkGiCx0lrSw+ieuQbw5IU\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 06:30:58 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"usageByActivity\": {\n        \"1\": 2\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "User - daily usage (range)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGEwMGQzOGU5NTczNjQ5ZWVlZDBjYzkiLCJpYXQiOjE3NTUzMTk2MDksImV4cCI6MTc1NTkyNDQwOX0.clA4ygTSJeLj309HX0gIoYJIZ_OHg_Ud-HPvZmd9kFY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/analytics/user/68a00d38e9573649eeed0cc9/usage?from=2025-01-01&to=2025-12-31",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"analytics",
+										"user",
+										"68a00d38e9573649eeed0cc9",
+										"usage"
+									],
+									"query": [
+										{
+											"key": "from",
+											"value": "2025-01-01"
+										},
+										{
+											"key": "to",
+											"value": "2025-12-31"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "User - usage (range)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/analytics/user/68a00d38e9573649eeed0cc9/usage?from=2025-01-01&to=2025-12-31",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"analytics",
+												"user",
+												"68a00d38e9573649eeed0cc9",
+												"usage"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2025-01-01"
+												},
+												{
+													"key": "to",
+													"value": "2025-12-31"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "JSON",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express",
+											"type": "text"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "32",
+											"type": "text"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"20-ylPOiAE8pwMCKPlWaTMghUEET28\"",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Aug 2025 06:15:14 GMT",
+											"type": "text"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive",
+											"type": "text"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"usage\": {\n        \"2025-08-15\": {\n            \"1\": 2\n        }\n    }\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "charge (check initial setup)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"amount\": \"100.50\",\n  \"cardNumber\": \"4111111111111111\",\n  \"expirationDate\": \"2026-12\",\n  \"cardCode\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/charge/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"charge",
+						""
+					]
+				},
+				"description": "Directly adds a payment to authorize.net merchant account, helpful to check initial up"
+			},
+			"response": [
+				{
+					"name": "charge",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": \"100.50\",\n  \"cardNumber\": \"4111111111111111\",\n  \"expirationDate\": \"2026-12\",\n  \"cardCode\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/charge/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"charge",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express",
+							"type": "text"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"type": "text"
+						},
+						{
+							"key": "Content-Length",
+							"value": "114",
+							"type": "text"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"72-Ns1jMJxz0HjUt0xYDKHb/MFzCFE\"",
+							"type": "text"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 27 Aug 2025 11:43:11 GMT",
+							"type": "text"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive",
+							"type": "text"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"transactionId\": \"120069911218\",\n    \"responseCode\": \"1\",\n    \"message\": \"This transaction has been approved.\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkNzBiODczNzNlNGE4YTNiNWViZTgiLCJpYXQiOjE3NTUxNDg0NzIsImV4cCI6MTc1NTc1MzI3Mn0.gGGZb2FrJu87Q7UHxOPPL1-5U-61BkjM21S2m_CdJJE",
+				"type": "string"
+			}
+		]
+	}
+}

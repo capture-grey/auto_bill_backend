@@ -72,7 +72,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: "UTC",
     },
-    // NEW: Authorize.net profile ID
+    // Authorize.net profile ID
     customerProfileId: {
       type: String,
       default: null,

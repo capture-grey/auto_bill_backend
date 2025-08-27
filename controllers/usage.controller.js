@@ -36,7 +36,7 @@ const startService = async (req, res) => {
       user.paymentMethods
     );
 
-    // Ensure user has an Authorize.net customer profile before starting
+    // check authorize.net profile existence
     if (!user.customerProfileId) {
       return res.status(400).json({
         success: false,
@@ -45,7 +45,7 @@ const startService = async (req, res) => {
       });
     }
 
-    // Check for ongoing activity of same type
+    // check for ongoing activity of same type
     const existingUsage = await Usage.findOne({
       user: userId,
       activityType,

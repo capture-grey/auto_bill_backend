@@ -1,10 +1,10 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { createCustomerProfile } = require("../services/authorizeNetService"); // new helper
+//const { createCustomerProfile } = require("../services/authorizeNetService");
 
 /**
- * Register a new user with Authorize.net Customer Profile
+ * Register a new user (authorize.net profile at add payent method)
  */
 const register = async (req, res) => {
   try {
@@ -51,7 +51,7 @@ const register = async (req, res) => {
         email: user.email,
         role: user.role,
         timezone: user.timezone,
-        paymentMethods: [], // empty at registration
+        paymentMethods: [],
       },
     });
   } catch (err) {

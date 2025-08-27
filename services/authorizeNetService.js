@@ -1,4 +1,4 @@
-// services/authorizeNetService.js
+// services/authorizeNetService.js(authorize.net create customer payment profile + charge users)
 const { APIContracts, APIControllers } = require("authorizenet");
 const crypto = require("crypto");
 const authorizeConfig = require("../config/authorize");

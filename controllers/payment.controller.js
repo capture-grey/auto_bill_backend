@@ -34,7 +34,7 @@ const addPaymentMethod = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    // Step 1: Ensure Customer Profile exists
+    // check customer profile exists
     let customerProfileId = user.customerProfileId;
     if (!customerProfileId) {
       const merchantCustomerId = require("crypto")
@@ -52,7 +52,7 @@ const addPaymentMethod = async (req, res) => {
       const customerProfile = new APIContracts.CustomerProfileType();
       customerProfile.setMerchantCustomerId(merchantCustomerId);
 
-      // Split name into first/last
+      // split name into first/last or repeat single name :)
       const nameParts = user.name.trim().split(" ");
       const firstName = nameParts[0];
       const lastName = nameParts[1] || nameParts[0];
@@ -101,7 +101,7 @@ const addPaymentMethod = async (req, res) => {
       console.log("DEBUG: Created customerProfileId:", customerProfileId);
     }
 
-    // Step 2: Prepare payment profile
+    //  payment profile
     const paymentProfile = new APIContracts.CustomerPaymentProfileType();
 
     const nameParts = user.name.trim().split(" ");
@@ -128,7 +128,6 @@ const addPaymentMethod = async (req, res) => {
     } else if (methodType === "bank") {
       const bankAccount = new APIContracts.BankAccountType();
 
-      // ✅ FIX: use lowercase for Authorize.Net enum
       const normalizedType = (accountType || "").toLowerCase();
       bankAccount.setAccountType(normalizedType);
       bankAccount.setRoutingNumber(routingNumber);
@@ -207,7 +206,7 @@ const addPaymentMethod = async (req, res) => {
     const customerPaymentProfileId =
       paymentProfileResponse.customerPaymentProfileId;
 
-    // Step 3: Save in user DB
+    // db record
     const paymentDataToSave = {
       methodType,
       paymentProfileId: customerPaymentProfileId,

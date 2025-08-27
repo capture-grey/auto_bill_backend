@@ -144,10 +144,10 @@ const chargeUsersByIds = async (userIds, note, res) => {
 
           const amount = totalMinutes * RATE_PER_MINUTE;
 
-          // 🔑 Call payment processor
+          // Call payment processor
           const paymentResult = await processPayment(user, amount, note);
 
-          // ✅ Save transaction to DB
+          // Save transaction to DB
           const transaction = new Transaction({
             user: user._id,
             usageItems: unpaidUsages.map((u) => u._id),
@@ -165,7 +165,7 @@ const chargeUsersByIds = async (userIds, note, res) => {
           });
           await transaction.save();
 
-          // ✅ Mark usages as paid
+          //  Mark usages as paid
           await Usage.updateMany(
             { _id: { $in: unpaidUsages.map((u) => u._id) } },
             {
