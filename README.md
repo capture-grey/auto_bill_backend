@@ -7,7 +7,7 @@ Usage-based SaaS billing platform backend built with Node.js, Express, MongoDB, 
 - User registration & authentication (JWT)
 - Usage tracking (start/end activities)
 - Payment method management (card/bank via Authorize.net)
-- Automated and manual billing for usage
+- Manual billing for usage
 - Analytics endpoints for admin and users
 - Role-based access control (admin/user)
 - RESTful API structure
