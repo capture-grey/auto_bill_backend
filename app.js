@@ -18,6 +18,9 @@ const billingRoutes = require("./routes/billing.routes");
 const analyticsRoutes = require("./routes/analytics.routes");
 const paymentRoutes = require("./routes/payment.routes");
 
+const edPaymentRoutes = require("./routes/ed_payment.routes");
+const edBillingRoutes = require("./routes/ed_billing.routes");
+
 const chargeRouter = require("./ref/charge");
 
 const app = express();
@@ -45,6 +48,9 @@ app.use("/api/usage", usageRoutes);
 app.use("/api/billing", billingRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/payment", paymentRoutes);
+
+app.use("/api/payment/ed", edPaymentRoutes);
+app.use("/api/ed", edBillingRoutes);
 
 app.use("/api/charge", chargeRouter);
 
