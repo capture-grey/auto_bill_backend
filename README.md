@@ -12,6 +12,10 @@ Usage-based SaaS billing platform backend built with Node.js, Express, MongoDB, 
 - Role-based access control (admin/user)
 - RESTful API structure
 
+***This project mainly implements CIM for creation of customer profile and billing
+along with 2 extra controller and API prefixed with "ed" to implement encryption and
+decryption of raw payment data and using it for billing
+
 ## Project Structure
 
 ```
@@ -86,13 +90,13 @@ example request body + response and brief detail in documentation
 ### Payment
 
 - `POST /api/payment/:userId` — Add payment method (card/bank)
-- `POST /api/payment/ed/:userId` — Add payment method (card/bank)
+- `POST /api/payment/ed/:userId` — Add payment method (card/bank) - encryption implemetntation
 
 ### Billing
 
 - `POST /api/billing/manual` — Charge all users (admin)
 - `POST /api/billing/manual/users` — Charge selected users (admin)
-- `POST /api/billing/ed/manual` — Charge selected users (admin)
+- `POST /api/billing/ed/manual` — Charge selected users (admin) - encryption implemetntation
 
 ### Analytics
 
