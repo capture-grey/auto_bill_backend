@@ -7,11 +7,6 @@ const { authorize } = require("../middlewares/auth.middleware");
 const router = express.Router();
 
 // Charge users using encrypted payment data
-router.post(
-  "/ed-billing/charge-users",
-  authenticate,
-  authorize(["admin"]),
-  edChargeUsersByIds
-);
+router.post("/manual", authenticate, authorize(["admin"]), edChargeUsersByIds);
 
 module.exports = router;

@@ -23,6 +23,11 @@ const edBillingRoutes = require("./routes/ed_billing.routes");
 
 const chargeRouter = require("./ref/charge");
 
+const {
+  startMonthlyBillingCron,
+  startTestBillingCron,
+} = require("./services/cronBillingService");
+
 const app = express();
 dotenv.config();
 
@@ -50,7 +55,7 @@ app.use("/api/analytics", analyticsRoutes);
 app.use("/api/payment", paymentRoutes);
 
 app.use("/api/payment/ed", edPaymentRoutes);
-app.use("/api/ed", edBillingRoutes);
+app.use("/api/billing/ed", edBillingRoutes);
 
 app.use("/api/charge", chargeRouter);
 
@@ -62,6 +67,13 @@ app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {
   console.log(`app listening to port ${process.env.PORT}`);
+
+  // Start cron jobs AFTER server is running
+  //startMonthlyBillingCron();
+
+  //if (process.env.NODE_ENV === 'development') {
+  //startTestBillingCron();
+  // }
 });
 
 //module.exports = app;

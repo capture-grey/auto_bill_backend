@@ -9,7 +9,6 @@ const transactionSchema = new mongoose.Schema(
       required: true,
     },
 
-    // Array of related usage items that this transaction is paying for
     usageItems: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -35,11 +34,11 @@ const transactionSchema = new mongoose.Schema(
     },
     customerProfileId: {
       type: String, // Authorize.net customerProfileId
-      required: true,
+      required: false, //true for main implementation(CIM) but for encrypt decrypt temporary false
     },
     paymentProfileId: {
       type: String, // Authorize.net paymentProfileId (tokenized card or bank account)
-      required: true,
+      required: false, //true for main implementation(CIM) but for encrypt decrypt temporary false
     },
 
     /**

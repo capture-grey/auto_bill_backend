@@ -37,13 +37,13 @@ const startService = async (req, res) => {
     );
 
     // check authorize.net profile existence
-    if (!user.customerProfileId) {
-      return res.status(400).json({
-        success: false,
-        message:
-          "User does not have a payment profile. Please add a payment method first.",
-      });
-    }
+    // if (!user.customerProfileId) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message:
+    //       "User does not have a payment profile. Please add a payment method first.",
+    //   });
+    // }
 
     // check for ongoing activity of same type
     const existingUsage = await Usage.findOne({
