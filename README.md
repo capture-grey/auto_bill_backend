@@ -1,4 +1,4 @@
-# Octo Bill
+# Auto Bill
 
 Usage-based SaaS billing platform backend built with Node.js, Express, MongoDB, and Authorize.net.
 
@@ -7,7 +7,7 @@ Usage-based SaaS billing platform backend built with Node.js, Express, MongoDB, 
 - User registration & authentication (JWT)
 - Usage tracking (start/end activities)
 - Payment method management (card/bank via Authorize.net)
-- Manual billing for usage
+- Automated and Manual billing for usage
 - Analytics endpoints for admin and users
 - Role-based access control (admin/user)
 - RESTful API structure
@@ -58,6 +58,7 @@ Usage-based SaaS billing platform backend built with Node.js, Express, MongoDB, 
    JWT_EXPIRES_IN=expiry_duration
    #cookie secret not required
    COOKIE_SECRET=your_cookie_secret
+   ENCRYPTION_KEY=your_encryption_key
    # Authorize.net credentials
    API_LOGIN_ID=your_api_login_id
    TRANSACTION_KEY=your_transaction_key
@@ -85,11 +86,13 @@ example request body + response and brief detail in documentation
 ### Payment
 
 - `POST /api/payment/:userId` — Add payment method (card/bank)
+- `POST /api/payment/ed/:userId` — Add payment method (card/bank)
 
 ### Billing
 
 - `POST /api/billing/manual` — Charge all users (admin)
 - `POST /api/billing/manual/users` — Charge selected users (admin)
+- `POST /api/billing/ed/manual` — Charge selected users (admin)
 
 ### Analytics
 
